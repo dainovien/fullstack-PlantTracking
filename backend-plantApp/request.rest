@@ -1,0 +1,53 @@
+GET http://localhost:5000/users
+
+###
+<<<<<<< HEAD
+=======
+GET http://localhost:5000/users/1
+
+###
+>>>>>>> e2e287c4057f323e1f06d0d76813ee03d2601a8a
+POST http://localhost:5000/users
+Content-Type: application/json
+
+{
+<<<<<<< HEAD
+    "username": "Adin din",
+    "email": "Adin@gmail.com",
+    "password": "123456",
+    "confPassword": "123456"
+}
+
+
+###
+POST http://localhost:5000/login
+Content-Type: application/json
+{
+     "email": "Adin@gmail.com",
+     "password": "123456"
+
+=======
+    "name": "Adin din",
+    "email": "Adin@gmail.com",
+    "gender": "Male"
+>>>>>>> e2e287c4057f323e1f06d0d76813ee03d2601a8a
+}
+
+###
+PATCH http://localhost:5000/users/1
+Content-Type: application/json
+
+{
+<<<<<<< HEAD
+    "username": "M maurel",
+    "email": "maurel@gmail.com",
+}
+=======
+    "name": "M maurel",
+    "email": "maurel@gmail.com",
+    "gender": "Male"
+}
+
+###
+DELETE http://localhost:5000/users/2
+>>>>>>> e2e287c4057f323e1f06d0d76813ee03d2601a8a
