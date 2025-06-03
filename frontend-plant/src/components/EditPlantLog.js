@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { BASE_URL } from "../utils/utils";
 
 const EditPlantLog = () => {
   const [activity, setActivity] = useState("");
@@ -19,7 +20,7 @@ const EditPlantLog = () => {
 
   const fetchPlants = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/plants");
+      const response = await axios.get(`${BASE_URL}/plants`);
       setPlants(response.data);
     } catch (error) {
       console.error("Gagal memuat daftar tanaman:", error);
@@ -28,7 +29,7 @@ const EditPlantLog = () => {
 
   const getLogById = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/plant-logs/${id}`);
+      const response = await axios.get(`${BASE_URL}/plant-logs/${id}`);
       const log = response.data;
       setActivity(log.activity || "");
       setDescription(log.description || "");
@@ -42,7 +43,7 @@ const EditPlantLog = () => {
   const updateLog = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`http://localhost:5000/plant-logs/${id}`, {
+      await axios.patch(`${BASE_URL}/plant-logs/${id}`, {
         activity,
         description,
         log_type: logType,
@@ -60,7 +61,6 @@ const EditPlantLog = () => {
       <div className="columns is-centered">
         <div className="column is-half">
           <form onSubmit={updateLog}>
-
             <div className="field">
               <label className="label">Tanaman</label>
               <div className="control">
@@ -137,7 +137,6 @@ const EditPlantLog = () => {
                 Batal
               </button>
             </div>
-
           </form>
         </div>
       </div>

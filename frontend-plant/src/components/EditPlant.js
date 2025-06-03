@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { BASE_URL } from "../utils/utils";
 
 const EditPlant = () => {
   const [name, setName] = useState("");
@@ -16,7 +17,7 @@ const EditPlant = () => {
   const updatePlant = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`http://localhost:5000/plants/${id}`, {
+      await axios.patch(`${BASE_URL}/plants/${id}`, {
         name,
         species,
         userId: parseInt(userId),
@@ -29,7 +30,7 @@ const EditPlant = () => {
 
   const getPlantById = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/plants/${id}`);
+      const response = await axios.get(`${BASE_URL}/plants/${id}`);
       setName(response.data.name);
       setSpecies(response.data.species || "");
       setUserId(response.data.userId.toString());

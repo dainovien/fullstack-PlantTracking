@@ -11,32 +11,29 @@ export const getPlants = async (req, res) => {
 };
 
 // GET plant by ID
-export const getPlantLogs = async (req, res) => {
-  const { plantId } = req.query;
+export const getPlantById = async (req, res) => {
   try {
-    let logs;
-    if (plantId) {
-      logs = await PlantLog.findAll({ where: { plantId: Number(plantId) } }); // pastikan Number
-    } else {
-      logs = await PlantLog.findAll();
-    }
-    res.json(logs);
+    const plant = await Plant.findOne({
+      where: { id: req.params.id },
+    });
+    if (!plant) return res.status(404).json({ msg: "Plant tidak ditemukan" });
+    res.status(200).json(plant);
   } catch (error) {
-    res.status(500).json({ message: "Gagal mengambil log" });
+    res.status(500).json({ msg: error.message });
   }
 };
-
 
 // CREATE new plant
 export const createPlant = async (req, res) => {
   const { name, species, userId } = req.body;
-  if (!name || !userId) return res.status(400).json({ msg: "Name dan userId wajib diisi" });
+  if (!name || !userId)
+    return res.status(400).json({ msg: "Name dan userId wajib diisi" });
 
   try {
     await Plant.create({
       name,
       species,
-      userId
+      userId,
     });
     res.status(201).json({ msg: "Tanaman berhasil dibuat" });
   } catch (error) {
@@ -48,7 +45,7 @@ export const createPlant = async (req, res) => {
 export const updatePlant = async (req, res) => {
   try {
     const plant = await Plant.findOne({
-      where: { id: req.params.id }
+      where: { id: req.params.id },
     });
     if (!plant) return res.status(404).json({ msg: "Plant tidak ditemukan" });
 
@@ -69,12 +66,12 @@ export const updatePlant = async (req, res) => {
 export const deletePlant = async (req, res) => {
   try {
     const plant = await Plant.findOne({
-      where: { id: req.params.id }
+      where: { id: req.params.id },
     });
     if (!plant) return res.status(404).json({ msg: "Plant tidak ditemukan" });
 
     await Plant.destroy({
-      where: { id: req.params.id }
+      where: { id: req.params.id },
     });
 
     res.status(200).json({ msg: "Tanaman berhasil dihapus" });

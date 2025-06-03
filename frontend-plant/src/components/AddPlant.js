@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../utils/utils";
 
 const AddPlant = () => {
   const [name, setName] = useState("");
@@ -20,7 +21,7 @@ const AddPlant = () => {
   const savePlant = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/plants", {
+      await axios.post(`${BASE_URL}/plants`, {
         name,
         species,
         userId: parseInt(userId),

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { BASE_URL } from "../utils/utils";
 
 const PlantList = () => {
   const [plants, setPlants] = useState([]);
@@ -12,7 +13,7 @@ const PlantList = () => {
 
   const fetchPlants = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/plants");
+      const response = await axios.get(`${BASE_URL}/plants`);
       setPlants(response.data);
     } catch (error) {
       console.error("Gagal mengambil data tanaman:", error);
@@ -24,7 +25,7 @@ const PlantList = () => {
     if (!window.confirm("Yakin ingin menghapus tanaman ini?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/plants/${id}`);
+      await axios.delete(`${BASE_URL}/plants/${id}`);
       fetchPlants(); // refresh list
     } catch (error) {
       console.error("Gagal menghapus tanaman:", error);

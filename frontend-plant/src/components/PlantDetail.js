@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+import { BASE_URL } from "../utils/utils";
 
 const DetailPlant = () => {
   const { id } = useParams();
@@ -16,28 +17,28 @@ const DetailPlant = () => {
 
   const fetchPlant = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/plants/${id}`);
+      const response = await axios.get(`${BASE_URL}/plants/${id}`);
       setPlant(response.data);
     } catch (error) {
       console.error("Gagal mengambil data tanaman:", error);
     }
   };
 
-    const fetchLogs = async () => {
+  const fetchLogs = async () => {
     try {
-        const response = await axios.get("http://localhost:5000/plant-logs", {
+      const response = await axios.get(`${BASE_URL}/plant-logs`, {
         params: { plantId: Number(id) },
-        });
-        setLogs(response.data);
+      });
+      setLogs(response.data);
     } catch (error) {
-        console.error("Gagal mengambil data log tanaman:", error);
+      console.error("Gagal mengambil data log tanaman:", error);
     }
-    };
+  };
 
   const deleteLog = async (logId) => {
     if (!window.confirm("Yakin ingin menghapus log ini?")) return;
     try {
-      await axios.delete(`http://localhost:5000/plant-logs/${logId}`);
+      await axios.delete(`${BASE_URL}/plant-logs/${logId}`);
       fetchLogs(); // Refresh logs setelah hapus
     } catch (error) {
       console.error("Gagal menghapus log:", error);
@@ -49,7 +50,9 @@ const DetailPlant = () => {
   return (
     <div className="container mt-5">
       <h1 className="title">{plant.name}</h1>
-      <p><strong>Spesies:</strong> {plant.species || "-"}</p>
+      <p>
+        <strong>Spesies:</strong> {plant.species || "-"}
+      </p>
 
       <h2 className="subtitle mt-5">Log Tanaman</h2>
       {logs.length === 0 ? (
@@ -99,10 +102,7 @@ const DetailPlant = () => {
         >
           Tambah Log Baru
         </button>
-        <button
-          className="button is-light"
-          onClick={() => navigate("/plants")}
-        >
+        <button className="button is-light" onClick={() => navigate("/plants")}>
           Kembali ke Daftar Tanaman
         </button>
       </div>

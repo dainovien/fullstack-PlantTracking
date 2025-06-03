@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../utils/utils";
 
 const PlantLogList = () => {
   const [plantLogs, setPlantLogs] = useState([]);
@@ -12,7 +13,7 @@ const PlantLogList = () => {
 
   const fetchPlantLogs = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/plantlogs");
+      const response = await axios.get(`${BASE_URL}/plantlogs`);
       setPlantLogs(response.data);
     } catch (error) {
       console.error("Gagal mengambil data log tanaman:", error);
@@ -22,7 +23,7 @@ const PlantLogList = () => {
   const deletePlantLog = async (id) => {
     if (!id) return;
     try {
-      await axios.delete(`http://localhost:5000/plantlogs/${id}`);
+      await axios.delete(`${BASE_URL}/plantlogs/${id}`);
       fetchPlantLogs();
     } catch (error) {
       console.error("Gagal menghapus log tanaman:", error);
@@ -66,7 +67,9 @@ const PlantLogList = () => {
                 <td>{index + 1}</td>
                 <td>{log.plantId || "-"}</td>
                 <td>{log.note || "-"}</td>
-                <td>{log.date ? new Date(log.date).toLocaleDateString() : "-"}</td>
+                <td>
+                  {log.date ? new Date(log.date).toLocaleDateString() : "-"}
+                </td>
                 <td>
                   <button
                     onClick={() => deletePlantLog(log.id)}

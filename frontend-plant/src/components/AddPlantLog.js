@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../utils/utils";
 
 const AddPlantLog = () => {
   const [plantId, setPlantId] = useState("");
@@ -17,27 +18,27 @@ const AddPlantLog = () => {
 
   const fetchPlants = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/plants");
+      const response = await axios.get(`${BASE_URL}/plants`);
       setPlants(response.data);
     } catch (error) {
       console.error("Gagal memuat daftar tanaman:", error);
     }
   };
 
-    const savePlantLog = async (e) => {
+  const savePlantLog = async (e) => {
     e.preventDefault();
     try {
-        await axios.post("http://localhost:5000/plant-logs", {
+      await axios.post(`${BASE_URL}/plant-logs`, {
         plantId: parseInt(plantId),
         activity: activity || null,
         description: description || null,
         log_type: logType || null,
-        });
-        navigate(`/plants/${plantId}`); // <-- arahkan ke halaman detail tanaman
+      });
+      navigate(`/plants/${plantId}`); // <-- arahkan ke halaman detail tanaman
     } catch (error) {
-        console.error("Gagal menyimpan log tanaman:", error);
+      console.error("Gagal menyimpan log tanaman:", error);
     }
-    };
+  };
 
   return (
     <div className="container mt-5">
