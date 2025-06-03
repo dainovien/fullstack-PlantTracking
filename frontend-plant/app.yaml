@@ -1,5 +1,5 @@
 runtime: nodejs20
-service: plantApp
+service: plantapp
 instance_class: F1
 
 handlers:
